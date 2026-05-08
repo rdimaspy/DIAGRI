@@ -1,0 +1,953 @@
+/* CSS Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Additional reset rules for consistency */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* Accessibility: Visually hidden class for screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* CSS Variables - Theme Configuration */
+:root {
+    /* Colors */
+    --primary-dark: #124620;
+    --accent-gold: #af9c38;
+    --soft-green: #607f4a;
+    --white: #fff;
+    --light-bg: #f5f5f5;
+    --text-dark: #333;
+    
+    /* Spacing */
+    --nav-height: 60px;
+    --section-padding: 60px;
+    --card-margin: 20px;
+    --card-padding: 20px;
+    --paragraph-spacing: 20px;
+    --logo-margin: 20px;
+    --avatar-margin: 40px;
+    
+    /* Typography */
+    --heading-size: 28px;
+    --body-size: 16px;
+    --card-title-size: 18px;
+    --card-desc-size: 14px;
+    --org-name-size: 14px;
+    --org-position-size: 12px;
+    
+    /* Dimensions */
+    --company-logo-max-width: 180px;
+    --ecommerce-logo-max-width: 100px;
+    --service-icon-size: 50px;
+    --avatar-size: 80px;
+    --card-max-width: 280px;
+    --footer-height: 80px;
+    
+    /* Transitions */
+    --hover-duration: 300ms;
+}
+
+/* Base Typography */
+body {
+    font: var(--body-size)/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font: bold 1em/1.3 Georgia, 'Times New Roman', serif;
+}
+
+h1 {
+    font-size: calc(var(--heading-size) * 1.2);
+}
+
+h2 {
+    font-size: var(--heading-size);
+    color: var(--accent-gold);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+h3 {
+    font-size: var(--card-title-size);
+}
+
+p {
+    margin: 0 0 var(--paragraph-spacing);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--hover-duration);
+}
+
+a:hover {
+    color: var(--accent-gold);
+}
+
+/* Accessibility: Clear focus indicators for keyboard navigation */
+a:focus,
+button:focus {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+a:focus:not(:focus-visible) {
+    outline: none;
+}
+
+a:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Utility Classes */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: var(--section-padding) 0;
+}
+
+/* ============================================
+   NAVIGATION BAR COMPONENT
+   Fixed navigation bar with smooth scroll
+   Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 2.4, 2.5
+   ============================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--primary-dark);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-menu li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+    color: var(--white);
+    font: 500 15px/1 inherit;
+    text-decoration: none;
+    transition: color var(--hover-duration), background-color var(--hover-duration);
+    white-space: nowrap;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-gold);
+    background-color: rgba(175, 156, 56, 0.1);
+}
+
+/* Accessibility: Enhanced focus state for navigation links */
+.nav-menu a:focus {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: -3px;
+    background-color: rgba(175, 156, 56, 0.2);
+}
+
+.nav-menu a:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: -3px;
+    background-color: rgba(175, 156, 56, 0.2);
+}
+
+/* Add padding to body to account for fixed navbar */
+body {
+    padding-top: var(--nav-height);
+}
+
+/* ============================================
+   HERO SECTION COMPONENT
+   Two horizontal parts: Company and E-commerce
+   Grid 3-column layout: logo | text | illustration
+   Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9
+   ============================================ */
+
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    width: 100%;
+}
+
+/* Each hero part (Company and E-commerce) */
+.hero-part {
+    padding: 60px 40px;
+    min-height: 450px;
+}
+
+.hero-part-company {
+    background: var(--white);
+}
+
+.hero-part-ecommerce {
+    background: #fefefe;
+}
+
+/* Grid container - 3 columns */
+.hero-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Grid columns */
+.hero-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo column */
+.hero-col-logo {
+    flex: 0 0 auto;
+}
+
+.company-logo {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.ecommerce-logo {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Text column */
+.hero-col-text {
+    flex: 1 1 auto;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.hero-text {
+    font-size: var(--body-size);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+/* Illustration column */
+.hero-col-illustration {
+    flex: 0 0 40%;
+    max-width: 40%;
+}
+
+.illustration-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.hero-illustration-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Semi-transparent overlay for illustrations */
+.illustration-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.3), rgba(245, 245, 245, 0));
+    z-index: 1;
+    pointer-events: none;
+}
+
+.illustration-overlay-ecommerce {
+    background: linear-gradient(to left, rgba(248, 246, 240, 0.3), rgba(248, 246, 240, 0));
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-part {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.hero-part-ecommerce {
+    animation-delay: 0.2s;
+}
+
+/* ============================================
+   SERVICES SECTION COMPONENT
+   Service cards with responsive grid layout
+   Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 7.10, 7.11, 7.12
+   ============================================ */
+
+.services-section {
+    background: var(--white);
+}
+
+.services-section h2 {
+    font-size: var(--heading-size);
+    color: var(--accent-gold);
+    margin-bottom: var(--paragraph-spacing);
+    text-align: center;
+}
+
+.services-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto;
+}
+
+.service-card {
+    max-width: var(--card-max-width);
+    margin: var(--card-margin);
+    padding: var(--card-padding);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: var(--white);
+    text-align: center;
+    transition: transform var(--hover-duration), box-shadow var(--hover-duration);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Accessibility: Focus state for service cards if they become interactive */
+.service-card:focus-within {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+.service-icon {
+    width: var(--service-icon-size);
+    height: var(--service-icon-size);
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: var(--primary-dark);
+}
+
+.service-title {
+    font-size: var(--card-title-size);
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+.service-description {
+    font-size: var(--card-desc-size);
+    color: var(--soft-green);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* ============================================
+   ORGANIZATION STRUCTURE SECTION COMPONENT
+   Minimalist clean layout without connection lines
+   CEO at top, all directors in one horizontal row below
+   Requirements: 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 3.7
+   ============================================ */
+
+.organization-section {
+    background: var(--light-bg);
+}
+
+.organization-section h2 {
+    font-size: var(--heading-size);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--accent-gold);
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.org-chart-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.org-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+/* CEO Level */
+.org-level-ceo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Directors Level - All in one horizontal row */
+.org-level-directors {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--avatar-margin);
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Organization Member Card */
+.org-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform var(--hover-duration);
+    padding: 10px;
+    max-width: 180px;
+}
+
+.org-member:hover {
+    transform: translateY(-5px);
+}
+
+.org-avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    background: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow var(--hover-duration), background-color var(--hover-duration);
+}
+
+.org-member:hover .org-avatar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--soft-green);
+}
+
+.org-initials {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.org-name {
+    font: bold var(--org-name-size)/1.2 inherit;
+    color: var(--primary-dark);
+    margin: 0 0 5px;
+}
+
+.org-position {
+    font-size: var(--org-position-size);
+    color: var(--soft-green);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* ============================================
+   CONTACT SECTION COMPONENT
+   Contact information display
+   Requirements: 9.5, 9.6, 9.7, 9.8
+   ============================================ */
+
+.contact-section {
+    background: var(--white);
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: var(--heading-size);
+    color: var(--accent-gold);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+.contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-content p {
+    font-size: var(--body-size);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.contact-content a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color var(--hover-duration);
+}
+
+.contact-content a:hover {
+    color: var(--accent-gold);
+}
+
+/* Accessibility: Focus state for contact links */
+.contact-content a:focus {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+.contact-content a:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* ============================================
+   ABOUT US SECTION COMPONENT
+   Clean layout with company information
+   Requirements: 6.1, 6.3, 6.4, 6.5, 6.6
+   ============================================ */
+
+.about-section {
+    background: var(--white);
+}
+
+.about-section h2 {
+    font-size: var(--heading-size);
+    color: var(--accent-gold);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+.about-content p {
+    font-size: var(--body-size);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+.about-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   VISION & MISSION SECTION COMPONENT
+   Clean layout with vision and mission statements
+   Requirements: 6.2, 6.3, 6.4, 6.5, 6.6
+   ============================================ */
+
+.vision-section {
+    background: var(--light-bg);
+}
+
+.vision-section h2 {
+    font-size: var(--heading-size);
+    color: var(--accent-gold);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+.vision-content h3 {
+    font-size: calc(var(--body-size) * 1.25);
+    color: var(--primary-dark);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.vision-content h3:first-child {
+    margin-top: 0;
+}
+
+.vision-content p {
+    font-size: var(--body-size);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: var(--paragraph-spacing);
+}
+
+.vision-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
+   FOOTER COMPONENT
+   Social media links and copyright
+   Requirements: 9.1, 9.2, 9.3, 9.4
+   ============================================ */
+
+.footer {
+    height: var(--footer-height);
+    background: var(--primary-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 15px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--hover-duration);
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+}
+
+/* Accessibility: Focus state for social media links */
+.social-links a:focus {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.social-links a:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.social-icon {
+    font-size: 24px;
+}
+
+.footer-text {
+    color: var(--white);
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS AND MEDIA QUERIES
+   Mobile-first approach: base styles for mobile,
+   then override for larger screens
+   ============================================ */
+
+/* Base styles above are mobile-first (< 768px) */
+
+/* Mobile-specific adjustments (< 768px) */
+@media screen and (max-width: 767px) {
+    /* Navigation adjustments for small screens */
+    .nav-menu a {
+        font-size: 12px;
+        padding: 0 10px;
+    }
+    
+    .navbar {
+        padding: 0 5px;
+    }
+    
+    /* Hero section - stack vertically on mobile */
+    .hero-part {
+        padding: 40px 20px;
+        min-height: auto;
+    }
+    
+    .hero-grid {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .hero-col-logo {
+        order: 1;
+    }
+    
+    .hero-col-text {
+        order: 2;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .hero-col-illustration {
+        order: 3;
+        max-width: 80%;
+        flex: 0 0 auto;
+    }
+    
+    .company-logo {
+        max-width: 150px;
+        margin: 0 auto;
+    }
+    
+    .ecommerce-logo {
+        max-width: 120px;
+        margin: 0 auto;
+    }
+    
+    .illustration-overlay {
+        background: rgba(245, 245, 245, 0.3);
+    }
+    
+    .illustration-overlay-ecommerce {
+        background: rgba(248, 246, 240, 0.3);
+    }
+    
+    /* Service cards - explicit single column layout */
+    .services-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--card-margin);
+    }
+    
+    .service-card {
+        width: 100%;
+        max-width: var(--card-max-width);
+        margin: 0;
+    }
+    
+    /* Organization chart - vertical stack on mobile */
+    .org-level-directors {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--avatar-margin);
+        width: 100%;
+    }
+}
+
+/* Tablet styles (768px - 1023px) */
+@media screen and (min-width: 768px) {
+    :root {
+        /* Adjust spacing for tablet */
+        --section-padding: 80px;
+    }
+    
+    body {
+        font-size: var(--body-size);
+    }
+    
+    .container {
+        padding: 0 40px;
+    }
+    
+    /* Navigation - increase font size and padding for tablet */
+    .nav-menu a {
+        font-size: 16px;
+        padding: 0 25px;
+    }
+    
+    /* Hero Section - maintain horizontal layout for tablet */
+    .hero-part {
+        padding: 60px 40px;
+    }
+    
+    .hero-grid {
+        gap: 25px;
+    }
+    
+    .hero-col-text {
+        min-width: 250px;
+        max-width: 500px;
+    }
+    
+    /* Illustration 50% width on tablet */
+    .hero-col-illustration {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+    
+    /* Services Section - 2-column grid for tablet */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--card-margin);
+        justify-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .service-card {
+        margin: 0;
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    /* Organization Chart - Keep horizontal row for tablet */
+    .org-level-directors {
+        flex-wrap: wrap;
+        max-width: 900px;
+    }
+}
+
+/* Desktop styles (1024px and above) */
+@media screen and (min-width: 1024px) {
+    :root {
+        /* Adjust spacing for desktop */
+        --section-padding: 100px;
+    }
+    
+    .container {
+        padding: 0 60px;
+    }
+    
+    /* Navigation - increase font size and padding for desktop */
+    .nav-menu a {
+        font-size: 16px;
+        padding: 0 30px;
+    }
+    
+    /* Hero Section - full horizontal layout for desktop */
+    .hero-part {
+        padding: 80px 60px;
+    }
+    
+    .hero-grid {
+        gap: 30px;
+    }
+    
+    .hero-col-text {
+        min-width: 300px;
+        max-width: 600px;
+    }
+    
+    /* Illustration 40% width on desktop */
+    .hero-col-illustration {
+        max-width: 40%;
+        flex: 0 0 40%;
+    }
+    
+    .hero-text {
+        font-size: 18px;
+    }
+    
+    /* Services Section - 3-column grid for desktop */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--card-margin);
+        justify-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .service-card {
+        margin: 0;
+        width: 100%;
+        max-width: var(--card-max-width);
+    }
+    
+    /* Organization Chart - All directors in one horizontal row for desktop */
+    .org-level-directors {
+        flex-wrap: nowrap;
+        max-width: 1400px;
+    }
+}
+
+/* Large desktop styles (1440px and above) - optional enhancement */
+@media screen and (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* Print styles - optional enhancement */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    .navbar {
+        position: static;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+}
